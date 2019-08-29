@@ -1,6 +1,6 @@
 <?php
 include_once 'conexion.php';
-
+//Leer
 $sql_leer = 'SELECT * FROM colores';
 
 $gsent = $pdo->prepare($sql_leer);
@@ -8,8 +8,18 @@ $gsent->execute();
 
 $resultado = $gsent->fetchAll();
 
-var_dump($resultado);
+//var_dump($resultado);
 
+//AGREGAR
+if($_POST){
+$color = $_POST['color'];
+$descripcion = $_POST['descripcion'];
+
+$sql_agregar = 'INSERT INTO colores (color,descripcion) value (?,?)';
+$sentencia_agregar= $pdo->prepare($sql_agregar);
+$sentencia_agregar->execute(array($color,$descripcion));
+header('location:index.php');
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -36,6 +46,13 @@ var_dump($resultado);
           <?php echo $dato['descripcion'] ?>
         </div>
         <?php endforeach ?>
+      </div>
+      <div class="col-md-6">
+        <form method="POST">
+          <input type ="text" class="form-control" name="color">
+          <input type ="text" class="form-control mt-3" name="descripcion">
+          <button class="btn btn-primary mt-3">Agregar</button>
+        </form>
       </div>
     </div>
 
