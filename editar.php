@@ -10,4 +10,8 @@ $sql_editar= 'UPDATE colores SET color=?,descripcion=? WHERE id=?';
 
 $sentencia_editar= $pdo->prepare($sql_editar);
 $sentencia_editar->execute(array($color,$descripcion,$id));
+
+//cerrando conexion
+$sentencia_editar=null;
+$pdo=null;
 header('location:index.php');

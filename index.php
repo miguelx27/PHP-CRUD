@@ -18,6 +18,9 @@ if ($_POST) {
   $sql_agregar = 'INSERT INTO colores (color,descripcion) value (?,?)';
   $sentencia_agregar = $pdo->prepare($sql_agregar);
   $sentencia_agregar->execute(array($color, $descripcion));
+  //cerrando conexiones
+  $sentencia_agregar=null;
+  $pdo=null;
   header('location:index.php');
 }
 
@@ -29,8 +32,10 @@ $sql_unico = 'SELECT * FROM colores WHERE id=?';
 
 $gsent_unico = $pdo->prepare($sql_unico);
 $gsent_unico->execute(array($id));
-
 $resultado_unico = $gsent_unico->fetch();
+
+//cerrando conexion
+$gsent_unico=null;
  }
 ?>
 <!doctype html>
@@ -97,3 +102,8 @@ $resultado_unico = $gsent_unico->fetch();
 </body>
 
 </html>
+<?php
+//cerrando conexion a la base de datos
+$pdo=null;
+$gsent=null;
+?>
